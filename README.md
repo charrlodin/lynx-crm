@@ -1,51 +1,150 @@
-# Welcome to your Convex + Next.js + Clerk app
+# LynxCRM
 
-This is a [Convex](https://convex.dev/) project created with [`npm create convex`](https://www.npmjs.com/package/create-convex).
+> A minimal, keyboard-first CRM for small teams. Built with Next.js, Convex, and Clerk.
 
-After the initial setup (<2 minutes) you'll have a working full-stack app using:
+## Features
 
-- Convex as your backend (database, server logic)
-- [React](https://react.dev/) as your frontend (web page interactivity)
-- [Next.js](https://nextjs.org/) for optimized web hosting and page routing
-- [Tailwind](https://tailwindcss.com/) for building great looking accessible UI
-- [Clerk](https://clerk.com/) for authentication
+### Pipeline Management
+- Kanban board with drag-and-drop
+- Customizable stages (reorder, rename, add/delete)
+- Lead cards showing value, company, days in stage
+- Won/Lost stage tracking with analytics
 
-## Get started
+### Leads
+- Create, edit, delete leads
+- Attach notes and view activity history
+- Assign to lists for organization
+- Tags, value, contact info tracking
+- Bulk actions (move to stage, delete)
+- CSV import with downloadable template
+- One-click CSV export
 
-If you just cloned this codebase and didn't use `npm create convex`, run:
+### Tasks & Reminders
+- Priority levels (high/medium/low)
+- Status workflow (To Do → In Progress → Done)
+- Due dates with overdue tracking
+- Link tasks to leads or lists
+
+### Lists
+- Group leads and tasks into collections
+- Color-coded for visual organization
+- View all items in a list at a glance
+
+### Dashboard
+- Key metrics (total leads, pipeline, won, lost, win rate)
+- Pipeline value breakdown (open, won, lost)
+- Task summary with status counts
+- Recent activity feed
+
+### Keyboard-First UX
+- Command palette (`/` or `⌘K`) - search leads, navigate, take actions
+- Global shortcuts: `N` new lead, `G D` dashboard, `G P` pipeline, etc.
+- Visual shortcut indicator when pressing `G`
+
+### Settings
+- Pipeline stage management with drag-to-reorder
+- Currency selection (USD, GBP, EUR, JPY, and more)
+- Usage tracking and limits display
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, Tailwind CSS
+- **Backend**: Convex (real-time database + serverless functions)
+- **Auth**: Clerk
+- **Drag & Drop**: @dnd-kit
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or pnpm
+- Convex account ([convex.dev](https://convex.dev))
+- Clerk account ([clerk.com](https://clerk.com))
+
+### Installation
+
+1. **Clone and install dependencies:**
+   ```bash
+   git clone <repo-url>
+   cd lynx-crm
+   npm install
+   ```
+
+2. **Set up Clerk:**
+   - Create a new application at [clerk.com](https://clerk.com)
+   - Copy your API keys
+
+3. **Set up Convex:**
+   - Run `npx convex dev`
+   - Follow the prompts to create a new project
+   - Configure the Clerk JWT template per [Convex auth docs](https://docs.convex.dev/auth/clerk)
+
+4. **Configure environment variables:**
+   
+   Create a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_CONVEX_URL=<your-convex-url>
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+   CLERK_SECRET_KEY=<your-clerk-secret-key>
+   ```
+
+5. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser:**
+   
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `/` or `⌘K` | Open command palette |
+| `N` | Create new lead |
+| `Esc` | Close modal/palette |
+| `G D` | Go to Dashboard |
+| `G P` | Go to Pipeline |
+| `G L` | Go to Leads |
+| `G T` | Go to Tasks |
+| `G O` | Go to Lists |
+| `G I` | Go to Import |
+| `G S` | Go to Settings |
+
+## Free Tier Limits
+
+- 1,000 leads
+- 1 pipeline
+- 10 stages
+- 3 imports per day
+- 500 rows per import
+
+## Project Structure
 
 ```
-npm install
-npm run dev
+├── app/                    # Next.js app router
+│   ├── (dashboard)/        # Protected dashboard routes
+│   │   ├── dashboard/      # Overview page
+│   │   ├── pipeline/       # Kanban board
+│   │   ├── leads/          # Leads table
+│   │   ├── tasks/          # Tasks management
+│   │   ├── lists/          # Lists management
+│   │   ├── import/         # CSV import
+│   │   └── settings/       # Configuration
+│   └── page.tsx            # Landing page
+├── components/
+│   └── dashboard/          # Dashboard components
+├── convex/                 # Convex backend
+│   ├── schema.ts           # Database schema
+│   ├── leads.ts            # Lead mutations/queries
+│   ├── tasks.ts            # Task mutations/queries
+│   ├── lists.ts            # List mutations/queries
+│   └── ...
+└── public/                 # Static assets
 ```
 
-If you're reading this README on GitHub and want to use this template, run:
+## License
 
-```
-npm create convex@latest -- -t nextjs-clerk
-```
-
-Then:
-
-1. Open your app. There should be a "Claim your application" button from Clerk in the bottom right of your app.
-2. Follow the steps to claim your application and link it to this app.
-3. Follow step 3 in the [Convex Clerk onboarding guide](https://docs.convex.dev/auth/clerk#get-started) to create a Convex JWT template.
-4. Uncomment the Clerk provider in `convex/auth.config.ts`
-5. Paste the Issuer URL as `CLERK_JWT_ISSUER_DOMAIN` to your dev deployment environment variable settings on the Convex dashboard (see [docs](https://docs.convex.dev/auth/clerk#configuring-dev-and-prod-instances))
-
-If you want to sync Clerk user data via webhooks, check out this [example repo](https://github.com/thomasballinger/convex-clerk-users-table/).
-
-## Learn more
-
-To learn more about developing your project with Convex, check out:
-
-- The [Tour of Convex](https://docs.convex.dev/get-started) for a thorough introduction to Convex principles.
-- The rest of [Convex docs](https://docs.convex.dev/) to learn about all Convex features.
-- [Stack](https://stack.convex.dev/) for in-depth articles on advanced topics.
-
-## Join the community
-
-Join thousands of developers building full-stack apps with Convex:
-
-- Join the [Convex Discord community](https://convex.dev/community) to get help in real-time.
-- Follow [Convex on GitHub](https://github.com/get-convex/), star and contribute to the open-source implementation of Convex.
+MIT
